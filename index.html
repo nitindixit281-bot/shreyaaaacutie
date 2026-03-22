@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For Shreya ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI', sans-serif;
+text-align:center;
+overflow:hidden;
+background:#ff69b4;
+}
+
+.page{
+display:none;
+height:100vh;
+width:100%;
+position:absolute;
+top:0;
+left:0;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.active{
+display:flex;
+}
+
+.card{
+background: rgba(255,255,255,0.3);
+border-radius:20px;
+padding:25px;
+margin:10px;
+box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+h1{
+color:#fff;
+font-size:34px;
+text-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+
+p{
+color:#fff;
+font-size:20px;
+}
+
+button{
+padding:12px 22px;
+border:none;
+border-radius:25px;
+background:#ff4d88;
+color:white;
+font-size:18px;
+margin:10px;
+}
+
+img{
+width:40vw;
+max-width:180px;
+margin:10px;
+border-radius:15px;
+transition:0.4s;
+}
+
+/* ZOOM */
+.zoom{
+transform:scale(2);
+z-index:10;
+}
+
+/* HEARTS */
+.heart{
+position:absolute;
+font-size:18px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh); opacity:0;}
+}
+
+/* FLOWERS */
+.flower{
+position:absolute;
+font-size:24px;
+animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh); opacity:0;}
+}
+
+.burst{
+position:absolute;
+animation:pop 1s ease-out forwards;
+}
+
+@keyframes pop{
+0%{transform:scale(0);}
+100%{transform:scale(2); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song1" src="song1.mp3"></audio>
+<audio id="song2" src="song2.mp3"></audio>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+<div class="card">
+<h1 id="typeText"></h1>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+<div class="card">
+<h1>Shreya, you're beautiful and you're my lalala 💖</h1>
+
+<div>
+<img src="pic1.jpg" onclick="burstHearts(event)">
+<img src="pic2.jpg" onclick="burstHearts(event)">
+</div>
+
+<button onclick="goToPage3()">Surprise</button>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+<div class="card">
+<h1>Choose one 💕</h1>
+
+<div>
+<img src="pic3.jpg" onclick="zoomAndOpen(this,'page5')">
+<img src="pic4.jpg" onclick="zoomAndOpen(this,'page6')">
+</div>
+
+<button onclick="goToPage4()">Barbie 💖</button>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+<div class="card">
+<h1>My Favorite Moments 💕</h1>
+
+<p>
+When you laugh 💖<br><br>
+When you smile 😊<br><br>
+When we talk 🥺<br><br>
+When we vc just like now lol ❤️
+</p>
+
+<button onclick="goToFinal()">Next 💖</button>
+</div>
+</div>
+
+<!-- PAGE 5 -->
+<div id="page5" class="page">
+<div class="card">
+<img src="pic5.jpg">
+<button onclick="backTo3()">Back 💖</button>
+</div>
+</div>
+
+<!-- PAGE 6 -->
+<div id="page6" class="page">
+<div class="card">
+<img src="pic6.jpg">
+<button onclick="backTo3()">Back 💖</button>
+</div>
+</div>
+
+<!-- FINAL PAGE -->
+<div id="final" class="page">
+<div class="card">
+<h1>Are you happy Shreya? 💖</h1>
+
+<button onclick="yesClicked()">Yes 💖</button>
+<button onclick="noClicked()">No 😈</button>
+</div>
+</div>
+
+<!-- THANK YOU PAGE -->
+<div id="thanks" class="page" onclick="showFlowers()">
+<div class="card">
+<h1>Apka Shukriyawaad 💖</h1>
+<p>(tap anywhere 💕)</p>
+</div>
+</div>
+
+<!-- VIDEO PAGE -->
+<div id="videoPage" class="page">
+<video id="myVideo" width="100%" height="100%" controls autoplay>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+<script>
+
+/* TYPE */
+let text = "Goddess Shreya, this is for you...";
+let i = 0;
+function typeWriter(){
+if(i < text.length){
+document.getElementById("typeText").innerHTML += text.charAt(i);
+i++;
+setTimeout(typeWriter,70);
+}}
+typeWriter();
+
+/* NAV */
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+document.getElementById("page1").onclick = function(){
+document.getElementById("song1").play();
+showPage("page2");
+}
+
+function goToPage3(){
+showPage("page3");
+document.getElementById("song1").pause();
+document.getElementById("song2").play();
+}
+
+function goToPage4(){ showPage("page4"); }
+function goToFinal(){ showPage("final"); }
+function backTo3(){ showPage("page3"); }
+
+/* ZOOM */
+function zoomAndOpen(img, page){
+img.classList.add("zoom");
+setTimeout(()=>{
+img.classList.remove("zoom");
+showPage(page);
+},400);
+}
+
+/* YES / NO */
+function yesClicked(){
+showPage("thanks");
+}
+
+function noClicked(){
+
+// STOP songs
+document.getElementById("song1").pause();
+document.getElementById("song2").pause();
+
+showPage("videoPage");
+
+let vid = document.getElementById("myVideo");
+vid.currentTime = 0;
+vid.play();
+}
+
+/* FLOWERS ON TAP */
+function showFlowers(){
+for(let i=0;i<60;i++){
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+f.style.left=Math.random()*100+"vw";
+f.style.fontSize=(20+Math.random()*25)+"px";
+document.body.appendChild(f);
+
+setTimeout(()=>f.remove(),5000);
+}
+}
+
+/* HEARTS */
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},400);
+
+/* BURST */
+function burstHearts(e){
+for(let i=0;i<10;i++){
+let h=document.createElement("div");
+h.className="burst";
+h.innerHTML="❤️";
+h.style.left=e.clientX+"px";
+h.style.top=e.clientY+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),1000);
+}
+}
+
+</script>
+
+</body>
+</html>
